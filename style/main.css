@@ -1,0 +1,571 @@
+*:not(input) {
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+
+html {
+    font-size: 20px;
+}
+
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    padding-left: 6rem;
+    overflow: hidden;
+    box-sizing: border-box;
+    transition: opacity .5s;
+    perspective: 60rem;
+}
+
+body.init {
+    opacity: 0;
+}
+
+body.init .controls {
+    transform: translateX(-6rem);
+}
+
+.hide,
+.hide.button {
+    display: none;
+}
+
+.controls {
+    position: absolute;
+    left: 0;
+    width: 6rem;
+    height: 100%;
+    background-color: #EEEEEE;
+    box-shadow: 0 .2rem .3rem rgba(0, 0, 0, .3);
+    transition: transform .5s .5s;
+}
+
+.control-header {}
+
+.control-title {
+    font: bold normal normal .7rem/150% Roboto, Arial;
+    text-align: center;
+    padding: .5rem 0;
+    background: #FAFAFA;
+    border-bottom: #E0E0E0 solid 1px;
+}
+
+.control-footer {
+    border-top: #E0E0E0 solid 1px;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    background: #FAFAFA;
+}
+
+.brand-img {
+    padding: .4rem 1.2rem .2rem 1.2rem;
+    margin-bottom: .5rem;
+    opacity: .8;
+    background: #DDD;
+}
+
+.tool-panel {
+    display: flex;
+    flex-wrap: wrap;
+    padding: .5rem;
+    box-sizing: border-box;
+}
+
+.tool {
+    width: 1.6rem;
+    height: 1.6rem;
+    margin: .45rem;
+    overflow: hidden;
+    cursor: pointer;
+    background: #FFF;
+    box-shadow: 0 0 .05rem rgba(0, 0, 0, .3);
+    border-radius: .1rem;
+    transition: opacity .3s, background .3s, box-shadow .3s;
+}
+
+.tool:hover {
+    background: #ECEFF1;
+}
+
+.button-panel {
+    display: flex;
+    flex-wrap: wrap;
+    padding: .5rem;
+    box-sizing: border-box;
+}
+
+.button {
+    position: relative;
+    display: inline-block;
+    width: 2rem;
+    height: 1.5rem;
+    margin: .25rem;
+    border-radius: .1rem;
+    overflow: hidden;
+    cursor: pointer;
+    font-family: Roboto, Arial;
+    font-size: .6rem;
+    color: #37474F;
+    line-height: 1.5rem;
+    text-align: center;
+    box-shadow: 0 0 .05rem rgba(0, 0, 0, .3), 0 .05rem .1rem rgba(0, 0, 0, .2);
+    background: #FDFEFF;
+    transition: opacity .3s, background .3s, box-shadow .3s;
+}
+
+.button > svg {
+    width: 80%;
+    position: absolute;
+    display: block;
+    left: 10%;
+}
+
+.button:active {
+    background: #ECEFF1;
+}
+
+.button:hover {
+    box-shadow: 0 0 .05rem rgba(0, 0, 0, .9), 0 .05rem .1rem rgba(0, 0, 0, .5);
+}
+
+.button.zoom:hover {
+    opacity: 1;
+}
+
+.button.download,
+.button.open-list,
+.button.read-file,
+.button.fullscreen {
+    width: 8rem;
+}
+
+.sep-line {
+    width: 6rem;
+    border-bottom: #E0E0E0 solid 1px;
+    margin: .5rem -.5rem;
+}
+
+.menu-sep-line {
+    width: 100%;
+    border-bottom: #E0E0E0 solid 1px;
+    margin: .2rem 0;
+}
+
+#file-input {
+    display: none;
+}
+
+.button.zoom {
+    width: 1.5rem;
+    height: 1.5rem;
+    opacity: .6;
+}
+
+.zoom-panel {
+    position: absolute;
+    left: 6.5rem;
+    bottom: .5rem;
+    z-index: 10;
+    width: 5rem;
+}
+
+.main {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+}
+
+.workarea {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 96em;
+    height: 64em;
+    background: linear-gradient(rgba(0, 0, 0, .05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, .05) 1px, transparent 1px);
+    background-size: .8em .8em;
+    background-position: left top;
+    font-size: 12px;
+    box-shadow: 0 0 1px rgba(0, 0, 0, .5);
+    margin: 3rem;
+}
+
+.workarea::after {
+    content: '';
+    position: absolute;
+    right: -3rem;
+    width: 3rem;
+    display: block;
+    height: 3rem;
+}
+
+.canvas {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+g.draw,
+g.action {
+    background: #FFF;
+    cursor: pointer;
+}
+
+g.draw:hover {
+    opacity: .5;
+}
+
+input.text-edit {
+    position: absolute;
+    width: 5em;
+}
+
+input.title-edit {
+    display: none;
+    position: absolute;
+    width: 5rem;
+    box-sizing: border-box;
+    left: .5rem;
+    top: 1.2rem;
+}
+
+.node-menu,
+.node-menu .menu-sub {
+    position: absolute;
+    padding: .2rem 0;
+    background: #FFF;
+    border-radius: .1rem;
+    box-shadow: 0 0 .05rem rgba(0, 0, 0, .5), 0 .05rem .2rem rgba(0, 0, 0, .3);
+    animation: menu-show .2s;
+    z-index: 20;
+    transform-origin: left top;
+}
+
+@keyframes menu-show {
+    from {
+        transform: scale(.5);
+        opacity: 0;
+    }
+
+    to {
+        transform: none;
+        opacity: 1;
+    }
+}
+
+.node-menu ul {
+    margin: 0;
+    padding: 0;
+}
+
+.node-menu li {
+    position: relative;
+    margin: 0;
+    padding: 0 .5rem;
+    list-style: none;
+    cursor: pointer;
+    font: normal normal normal .6rem/200% Roboto, Arial;
+    transition: background .3s;
+    white-space: nowrap;
+}
+
+.node-menu .menu-sub {
+    display: none;
+    left: calc(100% - .2rem);
+    top: -.2rem;
+}
+
+.node-menu.near-bottom .menu-sub {
+    top: auto;
+    bottom: -.2rem;
+    transform-origin: bottom left;
+}
+
+.node-menu.near-right .menu-sub {
+    left: auto;
+    right: calc(100% - .2rem);
+    transform-origin: top right;
+}
+
+.node-menu.near-right.near-bottom .menu-sub {
+    transform-origin: bottom right;
+}
+
+.node-menu li:hover {
+    background: #ECEFF1;
+}
+
+.node-menu li:hover .menu-sub {
+    display: block;
+}
+
+.node-menu .menu-icon {
+    margin-left: .4rem;
+    float: right;
+    font-style: normal;
+}
+
+.menu-icon::before {
+    content: "▸";
+}
+
+.loc-panel {
+    position: absolute;
+    right: .5rem;
+    bottom: .5rem;
+    width: auto;
+    height: 1rem;
+    padding: 0 .2rem;
+    background: #FFF;
+    margin: .25rem;
+    border-radius: .1rem;
+    overflow: hidden;
+    font-family: Roboto, Arial;
+    font-size: .6rem;
+    color: #37474F;
+    line-height: 1rem;
+    text-align: center;
+    box-shadow: 0 0 .05rem rgba(0, 0, 0, .3), 0 .05rem .1rem rgba(0, 0, 0, .2);
+    opacity: .6;
+    pointer-events: none;
+}
+
+.info-panel {
+    position: absolute;
+    right: .5rem;
+    top: .5rem;
+    width: auto;
+    padding: 0 .2rem;
+    background: #FFF;
+    margin: .25rem;
+    border-radius: .1rem;
+    overflow: hidden;
+    font-family: Roboto, Arial;
+    font-size: .6rem;
+    color: #37474F;
+    line-height: 1rem;
+    box-shadow: 0 0 .05rem rgba(0, 0, 0, .3), 0 .05rem .1rem rgba(0, 0, 0, .2);
+    pointer-events: none;
+}
+
+.setting-panel {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 30rem;
+    height: 20rem;
+    background: #FFF;
+    margin: auto;
+    border-radius: .2rem;
+    overflow: hidden;
+    font-family: Roboto, Arial;
+    font-size: .6rem;
+    color: #37474F;
+    line-height: 1rem;
+    box-shadow: 0 0 .05rem rgba(0, 0, 0, .5), 0 .05rem .2rem rgba(0, 0, 0, .3);
+    pointer-events: all;
+    z-index: 30;
+    animation: panel-show .4s both;
+}
+
+@keyframes panel-show {
+    from {
+        transform: rotateX(90deg) translateY(-10rem) scale(.6);
+        opacity: 0;
+    }
+
+    to {
+        transform: none;
+        opacity: 1;
+    }
+}
+
+.setting-header {
+    background: #FAFAFA;
+}
+
+.setting-title {
+    width: 100%;
+    padding: .2rem .4rem;
+    box-sizing: border-box;
+    font-weight: bold;
+}
+
+.setting-close {
+    padding: .1rem;
+    float: right;
+    display: inline-block;
+    border-left: #E0E0E0 solid 1px;
+    width: 1.2rem;
+    line-height: 1.2rem;
+    font-size: .8rem;
+    text-align: center;
+    cursor: pointer;
+    background: #FFF;
+    transition: opacity .3s;
+}
+
+.setting-close:hover {
+    background: #ECEFF1;
+}
+
+.setting-form {
+    height: calc(100% - 3.4rem);
+    box-sizing: border-box;
+    border-top: #E0E0E0 solid 1px;
+    border-bottom: #E0E0E0 solid 1px;
+    overflow: hidden;
+}
+
+.setting-tablist {
+    display: flex;
+    box-sizing: border-box;
+    border-bottom: #E0E0E0 solid 1px;
+    background: #FAFAFA;
+}
+
+.setting-tab {
+    padding: .1rem .4rem;
+    margin-bottom: -1px;
+    border-right: #E0E0E0 solid 1px;
+    border-bottom: #E0E0E0 solid 1px;
+    background: #EEEEEE;
+    cursor: pointer;
+}
+
+.setting-tab:hover {
+    background: #FAFAFA;
+}
+
+.setting-tab.active {
+    background: #FFF;
+    border-bottom: none;
+    cursor: default;
+}
+
+.setting-frame {
+    display: flex;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    padding: .6rem .8rem;
+    height: calc(100% - 1.2rem);
+    box-sizing: border-box;
+    overflow-y: scroll;
+}
+
+.setting-item {
+    flex-grow: 1;
+    font-size: .7rem;
+    line-height: 1.2rem;
+    padding: .4rem;
+    box-sizing: border-box;
+    width: 50%;
+    max-width: 50%;
+}
+
+.setting-item.full {
+    width: 100%;
+    max-width: 100%;
+}
+
+.setting-item > label {
+    margin-right: .5rem;
+    float: left;
+}
+
+.setting-item > div {
+    position: relative;
+    padding: 0 .2rem;
+    overflow: hidden;
+}
+
+.setting-item > div > input,
+.setting-item > div > select {
+    -webkit-appearance: none;
+    box-sizing: border-box;
+    width: 100%;
+    outline: medium;
+    font-size: .7rem;
+    line-height: .8rem;
+    height: 1.2rem;
+    padding: 0 .2rem;
+    border: 1px solid #b0bec5;
+    box-sizing: border-box;
+    border-radius: 0;
+    transition: border-color .3s;
+}
+
+.setting-item > div > input[type="color"] {
+    padding: 0 0.8rem;
+}
+
+.setting-item > div > i {
+    position: absolute;
+    display: inline-block;
+    font-style: normal;
+    text-align: center;
+    width: 1rem;
+    color: #37474F;
+}
+
+.setting-item > div > i:last-child {
+    right: 0;
+    width: 1.5rem;
+    font-size: 1.2rem;
+    line-height: 1rem;
+    color: inherit;
+}
+
+.setting-item > div > select {
+    cursor: pointer;
+}
+
+.setting-item > div > input:focus,
+.setting-item > div > select:focus {
+    border-color: #607D8B;
+}
+
+.setting-footer {
+    background: #FAFAFA;
+    height: 2rem;
+}
+
+.setting-button {
+    float: right;
+    line-height: 1.2rem;
+    width: auto;
+    height: 1.2rem;
+    padding: 0 .4rem;
+    margin: .4rem;
+    margin-left: 0;
+}
+
+.select-box,
+.move-box {
+    position: absolute;
+    width: auto;
+    height: auto;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, .2);
+    border: #6A6A6A 1px solid;
+}
+
+.move-box {
+    background: rgba(255, 255, 255, .5);
+    border: #6A6A6A 1px dashed;
+    cursor: move;
+}
+
+path {
+    fill: transparent;
+}

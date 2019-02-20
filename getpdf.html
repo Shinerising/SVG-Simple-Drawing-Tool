@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>PDF文件保存中...</title>
+    <style>
+        body {
+            margin: 0;
+            position: relative;
+        }
+
+        #svgbox {
+            display: none;
+        }
+
+        .circle-loader {
+            position: relative;
+            display: block;
+            width: 120px;
+            margin: 20vh auto;
+            fill: transparent;
+            stroke: #009688;
+            stroke-width: 5;
+            animation: dash 2s ease infinite, rotate 2s linear infinite;
+        }
+
+        @keyframes dash {
+            0% {
+                stroke-dasharray: 1, 95;
+                stroke-dashoffset: 0;
+            }
+
+            50% {
+                stroke-dasharray: 85, 95;
+                stroke-dashoffset: -25;
+            }
+
+            100% {
+                stroke-dasharray: 85, 95;
+                stroke-dashoffset: -93;
+            }
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    <svg class="circle-loader progress" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="15"></circle>
+    </svg>
+    <div id="svgbox"></div>
+    <script src="./assets/script/pdfkit.js"></script>
+    <script src="./assets/script/blobstream.js"></script>
+    <script src="./assets/script/svg2pdfkit.js"></script>
+    <script>
+        function resetDefaultStyles(doc) {
+            doc.fillColor('black')
+                .fillOpacity(1)
+                .strokeColor('black')
+                .strokeOpacity(1)
+                .lineWidth(1)
+                .undash()
+                .fontSize(12)
+                .font('Helvetica');
+        }
+
+        function createPdf(svg) {
+            var title = document.querySelector('#svgbox title') ? document.querySelector('#svgbox title').textContent : '未命名';
+            let doc = new PDFDocument({
+                compress: true,
+                size: 'a4',
+                layout: 'landscape',
+                info: {
+                    'Title': title
+                }
+            });
+
+            fetch('./assets/font/sourcehanserif.ttf')
+                .then(response => response.arrayBuffer())
+                .then(font => doc.registerFont('Source Han Serif', font))
+                .then(() => {
+                    fetch('./assets/font/sourcehansans.ttf')
+                        .then(response => response.arrayBuffer())
+                        .then(font => doc.registerFont('Source Han Sans', font))
+                        .then(() => {
+                            SVGtoPDF(doc, svg, 15, 30, {
+                                useCSS: true,
+                                width: 810,
+                                height: 540,
+                                fontCallback: function(family, bold, italic, fontOptions) {
+                                    if (family.match(/(?:^|,)\s*serif\s*$/)) {
+                                        return 'Source Han Serif';
+                                    } else if (family.match(/(?:^|,)\s*monospace\s*$/)) {
+                                        return 'Source Han Sans';
+                                    } else if (family.match(/(?:^|,)\s*sans-serif\s*$/) || true) {
+                                        return 'Source Han Sans';
+                                    }
+                                }
+                            });
+
+                            let stream = doc.pipe(blobStream());
+                            stream.on('finish', function() {
+                                let blob = stream.toBlob('application/pdf');
+                                if (navigator.msSaveOrOpenBlob) {
+                                    navigator.msSaveOrOpenBlob(blob, 'File.pdf');
+                                } else {
+                                    //document.getElementById('pdfbox').setAttribute('src', URL.createObjectURL(blob));
+                                }
+
+                                var a = document.createElement("a");
+                                document.body.appendChild(a);
+                                a.style = "display: none";
+                                var url = URL.createObjectURL(blob);
+                                a.href = url;
+                                a.download = title + '.pdf';
+                                a.click();
+                                //window.URL.revokeObjectURL(url);
+
+                                setTimeout(() => {
+                                    window.close();
+                                }, 1000);
+                            });
+                            doc.end();
+                        });
+                });
+        }
+        var svgText = window.opener.document.querySelector('svg.canvas').outerHTML;
+        document.querySelector('#svgbox').innerHTML = svgText;
+        createPdf(document.querySelector('#svgbox > svg'));
+
+    </script>
+
+</body>
+
+</html>
