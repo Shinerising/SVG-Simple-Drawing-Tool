@@ -456,6 +456,15 @@ let setListeners = (node) => {
                     obj.attr('data-arrow', 'true');
                     refreshNode(obj);
                 }
+            } else if ($(e.target).data('action') === 701) {
+                obj.find('rect').attr('rx', 10);
+                obj.find('rect').attr('ry', 10);
+            } else if ($(e.target).data('action') === 702) {
+                obj.find('rect').attr('rx', 20);
+                obj.find('rect').attr('ry', 20);
+            } else if ($(e.target).data('action') === 703) {
+                obj.find('rect').attr('rx', 40);
+                obj.find('rect').attr('ry', 40);
             } else if ($(e.target).data('action') === 1001 || $(e.target).data('action') === 1101 || $(e.target).data('action') === 1201 || $(e.target).data('action') === 1301) {
                 obj.attr('data-color', '');
             } else if ($(e.target).data('action') === 1002 || $(e.target).data('action') === 1102 || $(e.target).data('action') === 1202 || $(e.target).data('action') === 1302) {
