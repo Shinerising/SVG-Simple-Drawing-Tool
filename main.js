@@ -923,11 +923,48 @@ $(document).ready(() => {
             if (moveList.length) {
                 moveActive = 1;
                 moveOriginalBox = Object.assign({}, moveBox);
-                $('.workarea').append($('<div></div>').addClass('move-box'));
-                $('.move-box').css('left', l + 'px');
-                $('.move-box').css('right', r + 'px');
-                $('.move-box').css('top', t + 'px');
-                $('.move-box').css('bottom', b + 'px');
+                let node = $('<section class="move-box"></section>');
+                $('.workarea').append(node);
+                node.css('left', l + 'px');
+                node.css('right', r + 'px');
+                node.css('top', t + 'px');
+                node.css('bottom', b + 'px');
+                node.contextmenu((e) => {
+                    $('.node-menu').remove();
+                    let obj = $(e.currentTarget);
+                    let menu = $('<div type="text" />').addClass('node-menu');
+                    menu.append($('.menu-move-box').clone());
+                    let x = (e.pageX - $('svg.canvas').offset().left) + $(window).scrollLeft() - 5;
+                    let y = (e.pageY - $('svg.canvas').offset().top) + $(window).scrollTop() - 5;
+                    menu.css('left', x + 'px');
+                    menu.css('top', y + 'px');
+                    menu.click((e) => {
+                        if ($(e.target).data('action') === 0) {
+                            moveList.forEach((node, idx) => {
+                                node.remove();
+                            });
+                            $('.move-box').remove();
+                            moveList = [];
+                            moveBox = {};
+                            moveActive = 0;
+                        } else if ($(e.target).data('action') === 10) {
+                            moveList.forEach((node, idx) => {
+                                let offsetX = parseInt(node.attr('data-x')) + 20;
+                                let offsetY = parseInt(node.attr('data-y')) + 20;
+                                let str = 'translate(' + offsetX + ',' + offsetY + ')';
+                                let newNode = node.clone();
+                                newNode.attr('transform', str);
+                                newNode.attr('data-x', offsetX);
+                                newNode.attr('data-y', offsetY);
+                                newNode.appendTo(node.parent());
+                            });
+                        }
+                        menu.remove();
+                    });
+                    $('.workarea').append(menu);
+                    e.preventDefault();
+                    fixMenuPosition(menu);
+                });
             }
             selectBox = {};
         }
