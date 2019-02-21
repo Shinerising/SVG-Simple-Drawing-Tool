@@ -966,6 +966,7 @@ $(document).ready(() => {
                                 newNode.attr('data-x', offsetX);
                                 newNode.attr('data-y', offsetY);
                                 newNode.appendTo(node.parent());
+                                setListeners(newNode);
                             });
                         }
                         menu.remove();
@@ -1092,4 +1093,4 @@ $(document).ready(() => {
 
 });
 
-//$(window).bind('beforeunload', () => "确定要离开这个页面吗？");
+$(window).bind('beforeunload', () => "确定要离开这个页面吗？");
