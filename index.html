@@ -130,7 +130,7 @@
                 <div class="button zoom z-out">➕</div>
                 <div class="button zoom z-in">➖</div>
             </div>
-            <a href="https://github.com" target="_blank" title="点击访问Github仓库">
+            <a href="https://github.com/Shinerising/SVG-Simple-Drawing-Tool" target="_blank" title="点击访问Github仓库">
                 <div class="brand-img">
                     <img src="./assets/image/github.svg">
                 </div>
@@ -348,14 +348,16 @@
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width=2400 height=1600 viewBox="0 0 2400 1600" class="canvas">
                 <title class="canvas-title">未命名</title>
                 <style type="text/css">
-                    .line, .polyline {
+                    .line,
+                    .polyline {
                         fill: none;
                         stroke: black;
                         stroke-width: 3;
                     }
 
-                    .polyline .arrow{
+                    .polyline .arrow {
                         opacity: 0;
+                        fill: black;
                     }
 
                     .dash {
@@ -401,7 +403,7 @@
                         opacity: 0;
                     }
 
-                    .g-control > circle {
+                    .g-control>circle {
                         fill: black;
                         stroke: black;
                         stroke-width: 0;
@@ -458,8 +460,7 @@
             <div class="setting-close">✖︎</div>
             <div class="setting-title">设置面板</div>
         </div>
-        <div class="setting-form">
-        </div>
+        <form class="setting-form" autocomplete="off"></form>
         <div class="setting-footer">
             <div class="button setting-button submit"><b>保存设置</b></div>
             <div class="button setting-button cancel">取消修改</div>

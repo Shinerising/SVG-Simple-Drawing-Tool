@@ -35,7 +35,7 @@ let global = {
     canvasWidth: 2400,
     canvasHeight: 1600,
     canvasBackground: "FFFFFF",
-    canvasStrockColor: "000000",
+    canvasStrokeColor: "000000",
     lineStroke: 3,
     polygonStroke: 3,
     mouseStep: 10,
@@ -52,7 +52,7 @@ let config = {
         canvasWidth: 2400,
         canvasHeight: 1600,
         canvasBackground: "FFFFFF",
-        canvasStrockColor: "000000",
+        canvasStrokeColor: "000000",
         lineStroke: 3,
         polygonStroke: 3
     }, {
@@ -99,7 +99,7 @@ let configHelper = {
         type: "color",
         pattern: ''
     },
-    canvasStrockColor: {
+    canvasStrokeColor: {
         name: "画笔颜色",
         action: "input",
         type: "color",
@@ -1074,8 +1074,9 @@ $(document).ready(() => {
             $('.workarea').css('height', 0.04 * global.canvasHeight + 'em');
             $('.workarea').css('background-size', 0.04 * global.gridSize + 'em ' + 0.04 * global.gridSize + 'em');
             $('.workarea').css('background-color', '#' + global.canvasBackground);
-            $('.line, .polyline, .rectangle, .ellipse, .diamond, .button').css('stroke', '#' + global.canvasStrockColor);
-            $('.dot>circle').css('fill', '#' + global.canvasStrockColor);
+            $('.line, .polyline, .rectangle, .ellipse, .diamond, .button').css('stroke', '#' + global.canvasStrokeColor);
+            $('.dot>circle').css('fill', '#' + global.canvasStrokeColor);
+            $('.arrow').css('fill', '#' + global.canvasStrokeColor);
             $('.line, .polyline').css('stroke-width', global.lineStroke);
             $('.rectangle, .ellipse, .diamond, .button').css('stroke-width', global.polygonStroke);
         }
